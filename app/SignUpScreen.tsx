@@ -37,6 +37,7 @@ const SignUpScreen = () => {
             <TextInput
               style={styles.input}
               placeholder={placeholder}
+              placeholderTextColor="#b0c4de" // Optional: set placeholder text color
               secureTextEntry={placeholder === 'Password'}
             />
           </View>
@@ -89,7 +90,7 @@ const SignUpScreen = () => {
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    paddingVertical: 20,
+    paddingVertical: 0, // Removed padding to eliminate gray background
   },
   container: {
     flex: 1,
