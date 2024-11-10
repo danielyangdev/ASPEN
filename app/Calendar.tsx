@@ -2,22 +2,28 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-interface CalendarEvent {
+interface TimeSlot {
   id: string;
-  summary: string;
-  start: {
-    dateTime: string;
-    timeZone: string;
+  start: string;
+  end: string;
+  busy: boolean;
+}
+
+interface FreeBusyResponse {
+  timeMin: string;
+  timeMax: string;
+  calendars: {
+    [key: string]: {
+      busy: Array<{
+        start: string;
+        end: string;
+      }>;
+    };
   };
-  end: {
-    dateTime: string;
-    timeZone: string;
-  };
-  location?: string;
 }
 
 const Calendar = () => {
-  const [events, setEvents] = useState<CalendarEvent[]>([]); 
+  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigation = useNavigation();
@@ -43,8 +49,6 @@ const Calendar = () => {
       if (response.ok) {
         const data = await response.json();
         if (data.authorization_url) {
-          // In a real mobile app, you'd use WebBrowser.openAuthSessionAsync
-          // For testing, we'll just log the URL
           console.log('Auth URL:', data.authorization_url);
           Alert.alert(
             'Authentication Required',
@@ -52,7 +56,7 @@ const Calendar = () => {
           );
         }
         setIsAuthenticated(true);
-        syncGoogleCalendar();
+        checkAvailability();
       } else {
         throw new Error('Authentication failed');
       }
@@ -64,21 +68,73 @@ const Calendar = () => {
     }
   };
 
-  const syncGoogleCalendar = async () => {
+  const checkAvailability = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:8000/calendar/events');
+      
+      // Get the current date and time
+      const now = new Date();
+      const timeMin = now.toISOString();
+      const timeMax = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(); // 7 days from now
+
+      const response = await fetch('http://localhost:8000/calendar/freebusy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          timeMin,
+          timeMax,
+          items: [{ id: 'primary' }]
+        }),
+      });
       
       if (response.ok) {
-        const data = await response.json();
-        setEvents(data.events);
-        Alert.alert('Success', 'Calendar synchronized successfully!');
+        const data: FreeBusyResponse = await response.json();
+        
+        // Generate time slots for the next 7 days
+        const slots: TimeSlot[] = [];
+        const currentDate = new Date(now);
+        
+        for (let day = 0; day < 7; day++) {
+          // Generate slots for business hours (9 AM to 5 PM)
+          for (let hour = 9; hour < 17; hour++) {
+            const slotStart = new Date(currentDate);
+            slotStart.setHours(hour, 0, 0, 0);
+            
+            const slotEnd = new Date(currentDate);
+            slotEnd.setHours(hour + 1, 0, 0, 0);
+
+            // Check if the slot overlaps with any busy time
+            const isBusy = data.calendars.primary.busy.some(busySlot => {
+              const busyStart = new Date(busySlot.start);
+              const busyEnd = new Date(busySlot.end);
+              return (
+                (slotStart >= busyStart && slotStart < busyEnd) ||
+                (slotEnd > busyStart && slotEnd <= busyEnd)
+              );
+            });
+
+            slots.push({
+              id: `${slotStart.toISOString()}`,
+              start: slotStart.toISOString(),
+              end: slotEnd.toISOString(),
+              busy: isBusy
+            });
+          }
+          
+          // Move to next day
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        setTimeSlots(slots);
+        Alert.alert('Success', 'Calendar availability checked successfully!');
       } else {
-        throw new Error('Failed to fetch calendar events');
+        throw new Error('Failed to fetch calendar availability');
       }
     } catch (error) {
-      console.error('Calendar sync error:', error);
-      Alert.alert('Error', 'Failed to sync calendar events');
+      console.error('Calendar availability check error:', error);
+      Alert.alert('Error', 'Failed to check calendar availability');
     } finally {
       setIsLoading(false);
     }
@@ -93,7 +149,7 @@ const Calendar = () => {
       
       if (response.ok) {
         setIsAuthenticated(false);
-        setEvents([]);
+        setTimeSlots([]);
         Alert.alert('Success', 'Signed out successfully');
       } else {
         throw new Error('Failed to sign out');
@@ -108,7 +164,7 @@ const Calendar = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Calendar</Text>
+      <Text style={styles.title}>Calendar Availability</Text>
 
       {/* Auth Buttons */}
       {!isAuthenticated ? (
@@ -125,11 +181,11 @@ const Calendar = () => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity 
             style={styles.syncButton} 
-            onPress={syncGoogleCalendar}
+            onPress={checkAvailability}
             disabled={isLoading}
           >
             <Text style={styles.syncButtonText}>
-              Sync Calendar
+              Check Availability
             </Text>
           </TouchableOpacity>
           
@@ -152,26 +208,28 @@ const Calendar = () => {
         </View>
       )}
 
-      {/* Upcoming Events List */}
-      <Text style={styles.subtitle}>Upcoming Events:</Text>
+      {/* Time Slots List */}
+      <Text style={styles.subtitle}>Available Time Slots:</Text>
       <FlatList
-        data={events}
+        data={timeSlots}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
-          const { date, time } = formatDateTime(item.start.dateTime);
+          const { date, time } = formatDateTime(item.start);
           return (
-            <View style={styles.eventContainer}>
-              <Text style={styles.eventTitle}>{item.summary}</Text>
-              <Text style={styles.eventDetails}>{date} | {time}</Text>
-              {item.location && (
-                <Text style={styles.eventLocation}>📍 {item.location}</Text>
-              )}
+            <View style={[
+              styles.slotContainer,
+              item.busy ? styles.busySlot : styles.freeSlot
+            ]}>
+              <Text style={styles.slotTitle}>
+                {item.busy ? '🔴 Busy' : '🟢 Available'}
+              </Text>
+              <Text style={styles.slotDetails}>{date} | {time}</Text>
             </View>
           );
         }}
         ListEmptyComponent={() => (
           <Text style={styles.emptyText}>
-            {isAuthenticated ? 'No events found' : 'Sign in to view your events'}
+            {isAuthenticated ? 'No time slots found' : 'Sign in to view availability'}
           </Text>
         )}
       />
@@ -223,25 +281,25 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginVertical: 10,
   },
-  eventContainer: {
-    backgroundColor: '#5A9BD4',
+  slotContainer: {
     padding: 15,
     borderRadius: 10,
     marginVertical: 5,
   },
-  eventTitle: {
+  freeSlot: {
+    backgroundColor: '#4CAF50',
+  },
+  busySlot: {
+    backgroundColor: '#FF5252',
+  },
+  slotTitle: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  eventDetails: {
+  slotDetails: {
     color: '#fff',
     fontSize: 14,
-  },
-  eventLocation: {
-    color: '#fff',
-    fontSize: 14,
-    marginTop: 4,
   },
   nextButton: {
     alignSelf: 'flex-end',
