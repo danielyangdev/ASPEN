@@ -3,6 +3,8 @@ import { View, Text, Image, StyleSheet, Dimensions, Animated, PanResponder, Imag
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -14,6 +16,14 @@ const AddAdventure = () => {
   const navigation = useNavigation();
   const position = useRef(new Animated.ValueXY({ x: 0, y: screenHeight })).current;
 
+  const [fontsLoaded] = useFonts({
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   const cardsData = [
     {
@@ -165,7 +175,7 @@ const renderCard = () => {
         <View style={styles.backgroundOverlay} pointerEvents="none" />
 
         {/* Back Button */}
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
           <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
 
@@ -238,15 +248,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
+    fontFamily: 'KohSantepheap-Bold', 
   },
   trailTitle: {
     fontSize: 14,
     color: '#fff',
+    fontFamily: 'KohSantepheap-Regular', 
   },
   trailDate: {
     fontSize: 12,
     color: '#fff',
-    top: 8,
+    top: 5,
+    fontFamily: 'KohSantepheap-Regular', 
   },
   topContainer: {
     position: 'absolute',
@@ -278,6 +291,7 @@ const styles = StyleSheet.create({
   planButtonText: {
     color: '#000',
     fontSize: 16,
+    fontFamily: 'KohSantepheap-Regular', 
   },
 });
 
