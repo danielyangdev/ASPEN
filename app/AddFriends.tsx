@@ -12,14 +12,16 @@ const AddFriends = () => {
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === 'granted') {
       const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.Name, Contacts.Fields.Image],
+        fields: [Contacts.Fields.Name, Contacts.Fields.Image, Contacts.Fields.PhoneNumbers],
       });
 
       if (data.length > 0) {
         const contactsData = data.map((contact, index) => ({
           id: index.toString(),
           name: contact.name || 'Unknown',
-          username: contact.name ? contact.name.split(' ')[0].toLowerCase() : 'username',
+          phoneNumber: contact.phoneNumbers && contact.phoneNumbers.length > 0 
+            ? String(contact.phoneNumbers[0].number) 
+            : 'No phone number',  // Ensure phone number is always a string
           photo: contact.imageAvailable && contact.image ? { uri: contact.image.uri } : null,
         }));
         
@@ -62,7 +64,9 @@ const AddFriends = () => {
                   />
                   <View>
                     <Text style={styles.friendName}>{item.name}</Text>
-                    <Text style={styles.friendUsername}>{item.username}</Text>
+                    <Text style={styles.friendPhone}>
+                      {item.phoneNumber ? item.phoneNumber : 'No phone number'}
+                    </Text>
                   </View>
                 </View>
                 <TouchableOpacity style={styles.addButton} onPress={() => handleAddFriend(item.id)}>
@@ -95,7 +99,8 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 20,
+    marginTop: 50,
+    marginBottom: 20,
     color: '#fff',
   },
   syncButton: {
@@ -139,23 +144,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  friendUsername: {
+  friendPhone: { // New style for phone number
     color: '#fff',
     fontSize: 14,
   },
   addButton: {
-    backgroundColor: '#B0C4DE',
+    backgroundColor: '#87CEEB',
     paddingHorizontal: 15,
     paddingVertical: 5,
     borderRadius: 15,
   },
   addButtonText: {
-    color: '#4682B4',
+    color: '#fff',
     fontSize: 14,
   },
   nextButton: {
-    alignSelf: 'flex-end',
-    marginTop: 20,
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    padding: 10,
+    backgroundColor: '#4682B4',
+    borderRadius: 25,
   },
   nextButtonText: {
     fontSize: 24,
