@@ -58,6 +58,11 @@ const AdventureDetails = () => {
         <ScrollView style={styles.descriptionContainer}>
           <Text style={styles.descriptionText}>{description}</Text>
         </ScrollView>
+
+        {/* View More Button */}
+        <TouchableOpacity style={styles.viewMoreButton} onPress={() => {}}>
+          <Text style={styles.viewMoreButtonText}>View More</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Back Button */}
@@ -125,23 +130,36 @@ const styles = StyleSheet.create({
   },
   descriptionContainer: {
     flex: 1,
+    marginBottom: 20, // Space above View More button
   },
   descriptionText: {
     fontSize: 14,
     color: '#333',
     lineHeight: 20,
   },
+  viewMoreButton: {
+    backgroundColor: '#D1E8E4', // Button background color
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    alignItems: 'center',
+    marginBottom: 40, // Spacing below button
+    alignSelf: 'center', // Center the button
+  },
+  viewMoreButtonText: {
+    fontSize: 16,
+    color: '#000',
+  },
   backButton: {
     position: 'absolute',
     top: 40,
     left: 20,
-    paddingVertical: 10, // Increase padding for larger touch area
+    paddingVertical: 10,
     paddingHorizontal: 5,
-    // backgroundColor: 'rgba(0, 0, 0, 0.5)', // Removed background color
     borderRadius: 10,
   },
   backButtonText: {
-    fontSize: 24, // Larger font size
+    fontSize: 24,
     color: '#fff',
   },
 });
