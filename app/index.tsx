@@ -9,7 +9,7 @@ const Index = () => {
   return (
     <View style={styles.container}>
       {/* Title */}
-      <Text style={styles.title}>NAME</Text>
+      <Text style={styles.title}>ASPEN</Text>
 
       {/* Large Circle */}
       <View style={styles.circle} />
