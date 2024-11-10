@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     backgroundColor: '#fff', // White background color
-    paddingTop: 100, // Move everything down
+    paddingTop: 50, // Move everything down
   },
   backButton: {
     position: 'absolute',
