@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const interestsList = [
@@ -21,10 +21,16 @@ const SignUpScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require('/Users/danielyang/HackSC24/assets/images/aspen-background.png')}
+      style={styles.background}
+    >
+      {/* Dark Overlay */}
+      <View style={styles.overlay} />
+
       {/* Back Button */}
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>← Back</Text>
+        <Text style={styles.backButtonText}>←</Text>
       </TouchableOpacity>
 
       {/* Title */}
@@ -68,34 +74,40 @@ const SignUpScreen = () => {
       >
         <Text style={styles.nextButtonText}>→</Text>
       </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 70,
-    backgroundColor: '#87CEEB',
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'space-between',
+  },
+  contentContainer: {
+    marginTop: 50, // Adjust this value to move the content down
+    alignItems: 'center',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Darken background with transparency
   },
   backButton: {
     position: 'absolute',
-    top: 40,
+    top: 65,
     left: 20,
     padding: 10,
+    marginBottom: 0,
   },
   backButtonText: {
-    fontSize: 16,
+    fontSize: 24, // Larger font size for bigger back button
     color: '#fff',
   },
   title: {
     fontSize: 36,
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 40,
+    marginBottom: 0,
     textAlign: 'center',
   },
   inputContainer: {
@@ -145,8 +157,8 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     padding: 10,
-    backgroundColor: '#4682B4',
     borderRadius: 25,
+    alignItems: 'center',
   },
   nextButtonText: {
     fontSize: 24,
