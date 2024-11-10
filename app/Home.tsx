@@ -4,12 +4,12 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from './types'; // Ensure this import path is correct
 
 const adventures = [
-  { id: '1', title: 'Universal Studios', date: 'Nov 11th, 8:00am', image: require('../assets/images/adventure.png') },
-  { id: '2', title: 'Universal Studios', date: 'Nov 11th, 8:00am', image: require('../assets/images/adventure.png') },
-  { id: '3', title: 'Universal Studios', date: 'Nov 11th, 8:00am', image: require('../assets/images/adventure.png') },
-  { id: '4', title: 'Universal Studios', date: 'Nov 11th, 8:00am', image: require('../assets/images/adventure.png') },
-  { id: '5', title: 'Universal Studios', date: 'Nov 11th, 8:00am', image: require('../assets/images/adventure.png') },
-  { id: '6', title: 'Universal Studios', date: 'Nov 11th, 8:00am', image: require('../assets/images/adventure.png') },
+  { id: '1', title: 'Universal Studios', date: 'Nov 11th, 8:00am', image: require('../assets/images/universal-studios.png') },
+  { id: '2', title: 'Skydiving Oceanside', date: 'Nov 16th, 2:00pm', image: require('../assets/images/oceanside-skydiving.png') },
+  { id: '3', title: 'USC vs Nebraska', date: 'Nov 16th, 7:00pm', image: require('../assets/images/usc-football.png') },
+  { id: '4', title: 'Los Angeles County Museum', date: 'Nov 25th, 10:00am', image: require('../assets/images/la-county-museum.png') },
+  { id: '5', title: 'Big Bear Lake', date: 'Dec 13th, 7:00am', image: require('../assets/images/big-bear.png') },
+  { id: '6', title: 'Yosemite National Park', date: 'Dec 20th, 11:00am', image: require('../assets/images/yosemite-park.png') },
 ];
 
 const Home = () => {

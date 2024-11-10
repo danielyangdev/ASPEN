@@ -3,9 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const interestsList = [
-  'Camping', 'Hiking', 'Concerts', 'Service',
-  'Museums', 'Restaurants', 'Animals', 'Mindfulness',
-  'Skiing', 'Climbing'
+  'Camping', 'Restaurants', 'Hiking', 'Concerts', 'Service',
+  'Museums',  'Animals', 'Mindfulness',
+  'Skiing', 'Climbing', 'Reading', 'Sports',
 ];
 
 const InterestsScreen = () => {
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#000',
-    margin: 5,
+    margin: 7,
   },
   selectedInterestButton: {
     backgroundColor: '#E0E0E0', // Change to selected color

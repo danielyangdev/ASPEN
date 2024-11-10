@@ -74,7 +74,7 @@ const AddAdventure = () => {
     }
   });
 
-  const forceSwipe = (direction) => {
+  const forceSwipe = (direction: string) => {
     const x = direction === 'right' ? screenWidth * 1.2 : -screenWidth * 1.2;
     Animated.timing(position, {
       toValue: { x, y: 0 },

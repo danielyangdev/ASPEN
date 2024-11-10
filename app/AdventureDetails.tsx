@@ -62,8 +62,8 @@ const AdventureDetails = () => {
       </View>
 
       {/* Back Button */}
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Text style={styles.backButtonText}>← Back</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
+        <Text style={styles.backButtonText}>←</Text>
       </TouchableOpacity>
     </View>
   );
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 40,
+    top: 50,
     left: 20,
   },
   backButtonText: {
