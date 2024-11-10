@@ -6,7 +6,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-const SWIPE_THRESHOLD = 0.7 * screenWidth;
+const SWIPE_THRESHOLD = 0.4 * screenWidth;
 
 const cardsData = [
   {
