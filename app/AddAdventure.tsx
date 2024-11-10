@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, Animated, PanResponder, ImageBackground } from 'react-native';
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { RootStackParamList } from './types';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -13,7 +14,7 @@ const SWIPE_THRESHOLD = 0.4 * screenWidth;
 const AddAdventure = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const position = useRef(new Animated.ValueXY({ x: 0, y: screenHeight })).current;
 
   const [fontsLoaded] = useFonts({
@@ -175,7 +176,15 @@ const renderCard = () => {
         <View style={styles.backgroundOverlay} pointerEvents="none" />
 
         {/* Back Button */}
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
+          <Text style={styles.backButtonText}>←</Text>
+        </TouchableOpacity> */}
+
+        {/* <TouchableOpacity onPress={() => {console.log("Back button pressed"); navigation.navigate('Home');}} style={styles.backButton}>
+          <Text style={styles.backButtonText}>←</Text>
+        </TouchableOpacity> */}
+
+        <TouchableOpacity onPress={() => {console.log("Back button pressed"); navigation.goBack();}} style={styles.backButton}>
           <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
 
