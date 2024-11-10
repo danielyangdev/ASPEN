@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from './types'; // Ensure this import path is correct
+import Svg, { Path } from 'react-native-svg';
 
 const adventures = [
   { id: '1', title: 'Universal Studios', date: 'Nov 11th, 8:00am', image: require('../assets/images/adventure.png') },
@@ -22,27 +23,36 @@ const Home = () => {
         Take on a new{"\n"}adventure
       </Text>
 
-      {/* Subtitle */}
-      <Text style={styles.subtitle}>Upcoming Adventures:</Text>
+      {/* Curved Divider */}
+      <Svg
+        height="60"
+        width="100%"
+        viewBox="0 0 1440 320"
+        style={styles.curve}>
+        <Path fill="#ffffff" d="M0,224L1440,96L1440,320L0,320Z" />
+      </Svg>
 
-      {/* Adventure List */}
-      <ScrollView contentContainerStyle={styles.adventureList}>
-        {adventures.map(adventure => (
-          <View key={adventure.id} style={styles.adventureCard}>
-            <Image source={adventure.image} style={styles.adventureImage} />
-            <View style={styles.adventureInfo}>
-              <Text style={styles.adventureTitle}>{adventure.title}</Text>
-              <View style={styles.adventureDateContainer}>
-                <Image source={require('../assets/images/calendar.png')} style={styles.calendarIcon} />
-                <Text style={styles.adventureDate}>{adventure.date}</Text>
+      {/* Adventure Section */}
+      <View style={styles.adventureSection}>
+        <Text style={styles.subtitle}>Upcoming Adventures:</Text>
+        <ScrollView contentContainerStyle={styles.adventureList}>
+          {adventures.map(adventure => (
+            <View key={adventure.id} style={styles.adventureCard}>
+              <Image source={adventure.image} style={styles.adventureImage} />
+              <View style={styles.adventureInfo}>
+                <Text style={styles.adventureTitle}>{adventure.title}</Text>
+                <View style={styles.adventureDateContainer}>
+                  <Image source={require('../assets/images/calendar.png')} style={styles.calendarIcon} />
+                  <Text style={styles.adventureDate}>{adventure.date}</Text>
+                </View>
               </View>
+              <TouchableOpacity style={styles.viewButton}>
+                <Text style={styles.viewButtonText}>View</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.viewButton}>
-              <Text style={styles.viewButtonText}>View</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </ScrollView>
+          ))}
+        </ScrollView>
+      </View>
 
       {/* Add New Adventure Button */}
       <TouchableOpacity
@@ -58,25 +68,35 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffffff', // White background for the main container
   },
   backgroundImage: {
     position: 'absolute',
-    width: '145%',
-    height: 500,
+    top: 0,
+    width: '100%',
+    height: 300, // Adjust to cover around half the screen
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
-    marginTop: 160,
+    marginTop: 150, // Adjusted to push title down
+  },
+  curve: {
+    marginTop: -40, // Overlap the white background with a curve
+  },
+  adventureSection: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingTop: 20,
   },
   subtitle: {
     fontSize: 18,
     color: '#333',
     textAlign: 'center',
-    marginTop: 10,
     marginBottom: 20,
     fontWeight: '600',
   },
@@ -87,15 +107,15 @@ const styles = StyleSheet.create({
   adventureCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#D1E8E4',
+    backgroundColor: '#E0F7F7',
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 5,
-    elevation: 5,
+    elevation: 3,
   },
   adventureImage: {
     width: 50,
@@ -125,17 +145,17 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   viewButton: {
-    backgroundColor: '#87CEEB',
+    backgroundColor: '#A3C4FA', // Match the "View" button color in the correct design
     borderRadius: 20,
     paddingVertical: 5,
     paddingHorizontal: 15,
   },
   viewButtonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontWeight: 'bold',
   },
   addButton: {
-    backgroundColor: '#4682B4',
+    backgroundColor: '#A3C4FA', // Match the "+" button color in the correct design
     width: 70,
     height: 70,
     borderRadius: 35,
