@@ -1,69 +1,68 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 const AdventureDetails = () => {
+  const route = useRoute();
   const navigation = useNavigation();
+  const {
+    title,
+    date,
+    image,
+    price,
+    stars,
+    location,
+    people,
+    description
+  } = route.params;
 
   return (
     <View style={styles.container}>
       {/* Background Image */}
-      <Image
-        source={require('../assets/images/universal-studios.png')}
-        style={styles.backgroundImage}
-      />
+      <Image source={image} style={styles.backgroundImage} />
 
       {/* Content Container */}
       <View style={styles.contentContainer}>
         <View style={styles.handle} />
-        <Text style={styles.title}>Universal Studios:</Text>
+        <Text style={styles.title}>{title}</Text>
 
         {/* Icons and Information */}
         <View style={styles.infoContainer}>
           <View style={styles.infoRow}>
             <Image source={require('../assets/images/money-sign.png')} style={styles.icon} />
-            <Text style={styles.infoText}>$10</Text>
+            <Text style={styles.infoText}>${price}</Text>
           </View>
 
           <View style={styles.infoRow}>
             <Image source={require('../assets/images/star.png')} style={styles.icon} />
-            <Text style={styles.infoText}>4.5/5</Text>
+            <Text style={styles.infoText}>{stars}</Text>
           </View>
 
           <View style={styles.infoRow}>
             <Image source={require('../assets/images/calendar.png')} style={styles.icon} />
-            <Text style={styles.infoText}>Nov 11th, 8:00am - 5:00pm</Text>
+            <Text style={styles.infoText}>{date}</Text>
           </View>
 
           <View style={styles.infoRow}>
             <Image source={require('../assets/images/location.png')} style={styles.icon} />
-            <Text style={styles.infoText}>
-              100 Universal City Plaza, Universal City, CA 91608
-            </Text>
+            <Text style={styles.infoText}>{location}</Text>
           </View>
 
           <View style={styles.infoRow}>
             <Image source={require('../assets/images/person.png')} style={styles.icon} />
-            <Text style={styles.infoText}>Ally Wang, Beatrice Smith, Christopher Lee</Text>
+            <Text style={styles.infoText}>{people}</Text>
           </View>
         </View>
 
         {/* Description */}
         <ScrollView style={styles.descriptionContainer}>
-          <Text style={styles.descriptionText}>
-            Universal Studios is a major entertainment complex featuring a blend of thrilling
-            amusement park rides, engaging movie-based attractions, and studio tours set in the
-            vibrant ambiance of Hollywood magic. Created by Universal Pictures, the theme parks
-            are designed around popular film franchises, inviting guests to immerse themselves in
-            themed worlds inspired by movies like Harry Potter, Jurassic Park, The Simpsons, and
-            Despicable Me.
-          </Text>
+          <Text style={styles.descriptionText}>{description}</Text>
         </ScrollView>
       </View>
 
       {/* Back Button */}
-      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
-        <Text style={styles.backButtonText}>←</Text>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Text style={styles.backButtonText}>←</Text>
       </TouchableOpacity>
     </View>
   );
@@ -134,11 +133,15 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 50,
+    top: 40,
     left: 20,
+    paddingVertical: 10, // Increase padding for larger touch area
+    paddingHorizontal: 5,
+    // backgroundColor: 'rgba(0, 0, 0, 0.5)', // Removed background color
+    borderRadius: 10,
   },
   backButtonText: {
-    fontSize: 16,
+    fontSize: 24, // Larger font size
     color: '#fff',
   },
 });
