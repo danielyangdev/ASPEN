@@ -22,6 +22,11 @@ const SignUpScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* Back Button */}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>← Back</Text>
+      </TouchableOpacity>
+
       {/* Title */}
       <Text style={styles.title}>SIGN UP</Text>
 
@@ -75,6 +80,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#87CEEB',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    padding: 10,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: '#fff',
   },
   title: {
     fontSize: 36,

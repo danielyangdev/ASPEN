@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from './types'; // Adjust path if needed
 
@@ -7,61 +7,73 @@ const Index = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
-    <View style={styles.container}>
-      {/* Title */}
-      <Text style={styles.title}>ASPEN</Text>
+    <ImageBackground
+      source={require('/Users/danielyang/HackSC24/assets/images/aspen-background.png')}
+      style={styles.background}
+    >
+      {/* Dark Overlay */}
+      <View style={styles.overlay} />
 
-      {/* Large Circle */}
-      <View style={styles.circle} />
+      {/* Title and Subtitle */}
+      <View style={styles.textContainer}>
+        <Text style={styles.mainTitle}>ASPEN</Text>
+        <Text style={styles.subtitle}>
+          Take back your time,
+          {"\n"}take on an adventure
+        </Text>
+      </View>
 
-      {/* Log In Button */}
+      {/* Get Started Button */}
       <TouchableOpacity
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Log in</Text>
-      </TouchableOpacity>
-
-      {/* Sign Up Button */}
-      <TouchableOpacity
-        style={styles.button}
+        style={styles.getStartedButton}
         onPress={() => navigation.navigate('SignUpScreen')}
       >
-        <Text style={styles.buttonText}>Sign up</Text>
+        <Text style={styles.getStartedButtonText}>Get started</Text>
       </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#87CEEB', // Light blue background to match the sample
   },
-  title: {
-    fontSize: 36,
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Darken background with transparency
+  },
+  textContainer: {
+    position: 'absolute',
+    bottom: 140, // Position text right above the button
+    left: 20, // Align text to the left side
+  },
+  mainTitle: {
+    fontSize: 80, // Increase font size for emphasis
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 20,
+    textAlign: 'left',
   },
-  circle: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    backgroundColor: '#4682B4', // Darker blue for the circle
-    marginVertical: 30,
-  },
-  button: {
-    width: 200,
-    paddingVertical: 10,
-    borderRadius: 25,
-    backgroundColor: '#4682B4', // Dark blue for buttons
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  buttonText: {
+  subtitle: {
+    fontSize: 25,
     color: '#fff',
+    fontStyle: 'italic', // Make text italic
+    textAlign: 'left',
+    marginTop: 10, // Small gap between title and subtitle
+  },
+  getStartedButton: {
+    position: 'absolute',
+    bottom: 40, // Position button at the very bottom with some margin
+    alignSelf: 'center', // Center the button horizontally
+    width: '80%',
+    paddingVertical: 15,
+    borderRadius: 25,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+  getStartedButtonText: {
+    color: '#333',
     fontSize: 18,
     fontWeight: 'bold',
   },
