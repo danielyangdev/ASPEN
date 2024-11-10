@@ -27,7 +27,7 @@ const Index = () => {
       {/* Get Started Button */}
       <TouchableOpacity
         style={styles.getStartedButton}
-        onPress={() => navigation.navigate('SignUpScreen')}
+        onPress={() => navigation.navigate('NameScreen')} // Changed to navigate to NameScreen
       >
         <Text style={styles.getStartedButtonText}>Get started</Text>
       </TouchableOpacity>

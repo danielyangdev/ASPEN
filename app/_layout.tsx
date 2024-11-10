@@ -6,13 +6,14 @@ export default function Layout() {
   return (
     <Stack initialRouteName="index" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
-      <Stack.Screen name="SignUpScreen" />
+      <Stack.Screen name="NameScreen" />
+      <Stack.Screen name="LocationScreen" />
+      <Stack.Screen name="InterestsScreen" />
       <Stack.Screen name="AddFriends" />
       <Stack.Screen name="Home" />
       <Stack.Screen name="AdventureDetails" />
       <Stack.Screen name="AddAdventure" />
       <Stack.Screen name="Calendar" />
-      {/* Add other screens here */}
     </Stack>
   );
 }
