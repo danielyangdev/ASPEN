@@ -37,7 +37,14 @@ const Home = () => {
                 <Text style={styles.adventureDate}>{adventure.date}</Text>
               </View>
             </View>
-            <TouchableOpacity style={styles.viewButton}>
+            <TouchableOpacity
+              style={styles.viewButton}
+              onPress={() => navigation.navigate('AdventureDetails', {
+                title: adventure.title,
+                date: adventure.date,
+                image: adventure.image,
+              })}
+            >
               <Text style={styles.viewButtonText}>View</Text>
             </TouchableOpacity>
           </View>
