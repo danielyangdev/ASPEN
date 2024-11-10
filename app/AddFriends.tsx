@@ -65,8 +65,8 @@ const AddFriends = () => {
       {/* Introductory Text */}
       {!contactsSynced && (
         <>
-          <Text style={styles.title}>Let's add your friends</Text>
-          <Text style={styles.subtitle}>Find your friends on Aspen!</Text>
+          <Text style={styles.title}>Next, sync your contacts</Text>
+          <Text style={styles.subtitle}>Aspen's better with friends!</Text>
         </>
       )}
 
