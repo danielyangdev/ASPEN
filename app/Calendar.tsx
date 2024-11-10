@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -41,15 +41,12 @@ const Calendar = () => {
       setIsLoading(true);
       const response = await fetch('http://localhost:8000/auth/google/signin', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
       });
       
       if (response.ok) {
         const data = await response.json();
         if (data.authorization_url) {
-          console.log('Auth URL:', data.authorization_url);
           Alert.alert(
             'Authentication Required',
             'For testing: Open this URL in your browser:\n' + data.authorization_url
@@ -61,7 +58,6 @@ const Calendar = () => {
         throw new Error('Authentication failed');
       }
     } catch (error) {
-      console.error('Sign in error:', error);
       Alert.alert('Error', 'Failed to sign in with Google');
     } finally {
       setIsLoading(false);
@@ -71,33 +67,22 @@ const Calendar = () => {
   const checkAvailability = async () => {
     try {
       setIsLoading(true);
-      
-      // Get the current date and time
       const now = new Date();
       const timeMin = now.toISOString();
-      const timeMax = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(); // 7 days from now
+      const timeMax = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();
 
       const response = await fetch('http://localhost:8000/calendar/freebusy', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          timeMin,
-          timeMax,
-          items: [{ id: 'primary' }]
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ timeMin, timeMax, items: [{ id: 'primary' }] }),
       });
       
       if (response.ok) {
         const data: FreeBusyResponse = await response.json();
-        
-        // Generate time slots for the next 7 days
         const slots: TimeSlot[] = [];
         const currentDate = new Date(now);
         
         for (let day = 0; day < 7; day++) {
-          // Generate slots for business hours (9 AM to 5 PM)
           for (let hour = 9; hour < 17; hour++) {
             const slotStart = new Date(currentDate);
             slotStart.setHours(hour, 0, 0, 0);
@@ -105,7 +90,6 @@ const Calendar = () => {
             const slotEnd = new Date(currentDate);
             slotEnd.setHours(hour + 1, 0, 0, 0);
 
-            // Check if the slot overlaps with any busy time
             const isBusy = data.calendars.primary.busy.some(busySlot => {
               const busyStart = new Date(busySlot.start);
               const busyEnd = new Date(busySlot.end);
@@ -122,8 +106,6 @@ const Calendar = () => {
               busy: isBusy
             });
           }
-          
-          // Move to next day
           currentDate.setDate(currentDate.getDate() + 1);
         }
 
@@ -133,7 +115,6 @@ const Calendar = () => {
         throw new Error('Failed to fetch calendar availability');
       }
     } catch (error) {
-      console.error('Calendar availability check error:', error);
       Alert.alert('Error', 'Failed to check calendar availability');
     } finally {
       setIsLoading(false);
@@ -155,7 +136,6 @@ const Calendar = () => {
         throw new Error('Failed to sign out');
       }
     } catch (error) {
-      console.error('Sign out error:', error);
       Alert.alert('Error', 'Failed to sign out');
     } finally {
       setIsLoading(false);
@@ -164,39 +144,37 @@ const Calendar = () => {
 
   return (
     <View style={styles.container}>
+      {/* Back Button */}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>←</Text>
+      </TouchableOpacity>
+
       <Text style={styles.title}>Calendar Availability</Text>
 
       {/* Auth Buttons */}
       {!isAuthenticated ? (
         <TouchableOpacity 
-          style={styles.syncButton} 
+          style={styles.authButton} 
           onPress={handleGoogleSignIn}
           disabled={isLoading}
         >
-          <Text style={styles.syncButtonText}>
-            Sign in with Google
-          </Text>
+          <Text style={styles.authButtonText}>Sign in with Google</Text>
         </TouchableOpacity>
       ) : (
         <View style={styles.buttonContainer}>
           <TouchableOpacity 
-            style={styles.syncButton} 
+            style={styles.authButton} 
             onPress={checkAvailability}
             disabled={isLoading}
           >
-            <Text style={styles.syncButtonText}>
-              Check Availability
-            </Text>
+            <Text style={styles.authButtonText}>Check Availability</Text>
           </TouchableOpacity>
-          
           <TouchableOpacity 
-            style={[styles.syncButton, styles.signOutButton]} 
+            style={[styles.authButton, styles.signOutButton]} 
             onPress={handleSignOut}
             disabled={isLoading}
           >
-            <Text style={styles.syncButtonText}>
-              Sign Out
-            </Text>
+            <Text style={styles.authButtonText}>Sign Out</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -204,7 +182,7 @@ const Calendar = () => {
       {/* Loading Indicator */}
       {isLoading && (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#fff" />
+          <ActivityIndicator size="large" color="#000" />
         </View>
       )}
 
@@ -248,38 +226,47 @@ const Calendar = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#87CEEB',
+    paddingHorizontal: 20,
+    backgroundColor: '#fff', // White background for consistency
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+  },
+  backButtonText: {
+    fontSize: 24,
+    color: '#000',
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 60,
     textAlign: 'center',
-    marginVertical: 20,
-    color: '#fff',
   },
   buttonContainer: {
     gap: 10,
     marginVertical: 15,
   },
-  syncButton: {
-    backgroundColor: '#4682B4',
+  authButton: {
+    backgroundColor: '#000',
     paddingVertical: 10,
     borderRadius: 25,
     alignItems: 'center',
     marginVertical: 5,
   },
   signOutButton: {
-    backgroundColor: '#DC3545',
+    backgroundColor: '#FF5252',
   },
-  syncButtonText: {
+  authButtonText: {
     color: '#fff',
     fontSize: 16,
   },
   subtitle: {
     fontSize: 18,
-    color: '#fff',
-    marginVertical: 10,
+    marginTop: 20,
+    marginBottom: 10,
+    fontWeight: 'bold',
   },
   slotContainer: {
     padding: 15,
@@ -302,8 +289,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   nextButton: {
-    alignSelf: 'flex-end',
-    marginTop: 20,
+    alignSelf: 'center',
+    marginTop: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 25,
+    backgroundColor: '#000',
   },
   nextButtonText: {
     fontSize: 24,
@@ -314,7 +305,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    color: '#fff',
+    color: '#000',
     textAlign: 'center',
     marginTop: 20,
   },
