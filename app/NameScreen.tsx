@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const NameScreen = () => {
   const [name, setName] = useState('');
   const navigation = useNavigation();
+
+  // Load the font
+  const [fontsLoaded] = useFonts({
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <View style={styles.container}>
       {/* Top Image */}
       <View style={styles.imageContainer}>
         <Image
-          source={require('/Users/danielyang/HackSC24/assets/images/aspen-background-1.png')}
+          source={require('../assets/images/aspen-background-1.png')}
           style={styles.image}
         />
       </View>
@@ -51,10 +63,10 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: 'absolute',
     top: -20,
-    right: -130, // Move it further off-screen to cut off more
-    width: 330, // Increased width by 50% from original
-    height: 270, // Increased height by 50% from original
-    borderBottomLeftRadius: 80, // Slight rounding for aesthetics
+    right: -130,
+    width: 330,
+    height: 270,
+    borderBottomLeftRadius: 80,
     overflow: 'hidden',
   },
   image: {
@@ -69,19 +81,22 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 24,
+    fontFamily: 'KohSantepheap-Bold', // Apply font to back button
   },
   textContainer: {
-    marginTop: 350, // Move text lower for balance with enlarged image
+    marginTop: 350,
     alignItems: 'flex-start',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    fontFamily: 'KohSantepheap-Bold', // Apply font to title
   },
   subtitle: {
     fontSize: 18,
     marginTop: 10,
     marginBottom: 20,
+    fontFamily: 'KohSantepheap-Regular', // Apply font to subtitle
   },
   input: {
     borderBottomWidth: 1,
@@ -96,6 +111,7 @@ const styles = StyleSheet.create({
   },
   nextButtonText: {
     fontSize: 24,
+    fontFamily: 'KohSantepheap-Regular', // Apply font to next button
   },
 });
 

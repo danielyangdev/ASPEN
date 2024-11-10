@@ -24,7 +24,7 @@ const InterestsScreen = () => {
       {/* Top Image */}
       <View style={styles.imageContainer}>
         <Image
-          source={require('/Users/danielyang/HackSC24/assets/images/aspen-background-3.png')}
+          source={require('../assets/images/aspen-background-3.png')}
           style={styles.image}
         />
       </View>
