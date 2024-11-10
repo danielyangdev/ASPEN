@@ -1,50 +1,11 @@
-# Welcome to your Expo app 👋
+# ASPEN🏔️
+Take back your time, take on an adventure
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Inspiration
+In today’s fast-paced world, it's easy to get stuck in routines, making it hard to plan enriching experiences outside of daily responsibilities. Many people find it challenging to organize adventures due to limited time, overwhelming options, or the complexity of coordinating schedules with friends. **Big Tech hires PhD psychologists to design apps that keep us hooked, stealing our time and attention. With ASPEN, we’re flipping the script**—using the same techniques, like an intuitive UI, calendar integration, Tinder-like swiping, and gamification with confetti, to help users reclaim their time for good. ASPEN was born out of a desire to help people plan meaningful experiences, explore the world around them, and say “yes” to adventure.
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+<img width="458" alt="page_1" src="https://github.com/user-attachments/assets/4a670d7a-4727-41ff-b769-7a01c0dfd1c8">
+<img width="458" alt="page_2" src="https://github.com/user-attachments/assets/59ea71a3-4a59-4cce-94e5-1a219b8dd86c">
+<img width="458" alt="page_4" src="https://github.com/user-attachments/assets/fefd985c-85c6-4649-b2f2-d8e6ac374845">
+<img width="458" alt="page_5" src="https://github.com/user-attachments/assets/b4d0c7ce-42a0-4ab2-a0e3-12568741ad5b">
+<img width="458" alt="page_6" src="https://github.com/user-attachments/assets/6d02e9db-2628-4f7c-bb19-0a388819bb74">
