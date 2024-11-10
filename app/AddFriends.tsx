@@ -10,8 +10,9 @@ const AddFriends = () => {
     phoneNumber: string;
     photo: { uri: string } | null;
   }
-  
+
   const [friends, setFriends] = useState<Friend[]>([]);
+  const [contactsSynced, setContactsSynced] = useState(false);
   const navigation = useNavigation();
 
   // Function to sync contacts
@@ -28,11 +29,12 @@ const AddFriends = () => {
           name: contact.name || 'Unknown',
           phoneNumber: contact.phoneNumbers && contact.phoneNumbers.length > 0 
             ? String(contact.phoneNumbers[0].number) 
-            : 'No phone number',  // Ensure phone number is always a string
+            : 'No phone number',
           photo: contact.imageAvailable && contact.image && contact.image.uri ? { uri: contact.image.uri } : null,
         }));
-        
+
         setFriends(contactsData);
+        setContactsSynced(true); // Hide button after syncing
       } else {
         Alert.alert('No contacts found', 'Your contact list is empty.');
       }
@@ -41,19 +43,27 @@ const AddFriends = () => {
     }
   };
 
-  // Function to handle adding a friend and removing from the list
   const handleAddFriend = (id: string) => {
     setFriends((prevFriends) => prevFriends.filter(friend => friend.id !== id));
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>ADD FRIENDS</Text>
+      {/* Back Button */}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>←</Text>
+      </TouchableOpacity>
+
+      {/* Title */}
+      <Text style={styles.title}>Let's add your friends</Text>
+      <Text style={styles.subtitle}>Find your friends on Aspen!</Text>
 
       {/* Sync Contacts Button */}
-      <TouchableOpacity style={styles.syncButton} onPress={syncContacts}>
-        <Text style={styles.syncButtonText}>Sync contacts</Text>
-      </TouchableOpacity>
+      {!contactsSynced && (
+        <TouchableOpacity style={styles.syncButton} onPress={syncContacts}>
+          <Text style={styles.syncButtonText}>Sync contacts</Text>
+        </TouchableOpacity>
+      )}
 
       {/* Friends List - Only show if there are contacts */}
       {friends.length > 0 && (
@@ -72,7 +82,7 @@ const AddFriends = () => {
                   <View>
                     <Text style={styles.friendName}>{item.name}</Text>
                     <Text style={styles.friendPhone}>
-                      {item.phoneNumber ? item.phoneNumber : 'No phone number'}
+                      {item.phoneNumber || 'No phone number'}
                     </Text>
                   </View>
                 </View>
@@ -99,38 +109,48 @@ const AddFriends = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#87CEEB',
+    paddingHorizontal: 20,
+    justifyContent: 'center',
+    backgroundColor: '#fff', // White background color
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+  },
+  backButtonText: {
+    fontSize: 24,
+    color: '#000',
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 50,
-    marginBottom: 20,
-    color: '#fff',
-  },
-  syncButton: {
-    backgroundColor: '#4682B4',
-    paddingVertical: 10,
-    borderRadius: 25,
-    alignItems: 'center',
-    marginVertical: 15,
-  },
-  syncButtonText: {
-    color: '#fff',
-    fontSize: 16,
   },
   subtitle: {
     fontSize: 18,
-    color: '#fff',
-    marginVertical: 10,
+    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  syncButton: {
+    alignSelf: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+    backgroundColor: '#f2f2f2',
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  syncButtonText: {
+    fontSize: 16,
+    color: '#000',
   },
   friendContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#5A9BD4',
+    backgroundColor: '#E0E0E0',
     padding: 15,
     borderRadius: 10,
     marginVertical: 5,
@@ -147,16 +167,16 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   friendName: {
-    color: '#fff',
+    color: '#000',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  friendPhone: { // New style for phone number
-    color: '#fff',
+  friendPhone: {
+    color: '#000',
     fontSize: 14,
   },
   addButton: {
-    backgroundColor: '#87CEEB',
+    backgroundColor: '#000',
     paddingHorizontal: 15,
     paddingVertical: 5,
     borderRadius: 15,
@@ -166,16 +186,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   nextButton: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    padding: 10,
-    backgroundColor: '#4682B4',
-    borderRadius: 25,
+    alignSelf: 'flex-end',
+    marginTop: 30,
   },
   nextButtonText: {
     fontSize: 24,
-    color: '#fff',
   },
 });
 

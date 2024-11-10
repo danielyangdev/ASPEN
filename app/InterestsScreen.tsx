@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 60, // For spacing at the top
+    justifyContent: 'center',
     backgroundColor: '#fff',
   },
   backButton: {
@@ -65,17 +65,14 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 24,
-    color: '#000',
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 10,
   },
   subtitle: {
     fontSize: 18,
-    color: '#000',
+    marginTop: 10,
     marginBottom: 20,
   },
   interestsContainer: {
@@ -85,19 +82,17 @@ const styles = StyleSheet.create({
   },
   interestButton: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 25,
+    paddingHorizontal: 15,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: '#000',
-    marginBottom: 10,
-    alignItems: 'center',
+    margin: 5,
   },
   selectedInterestButton: {
-    backgroundColor: '#E0E0E0', // Color for selected state
+    backgroundColor: '#E0E0E0', // Change to selected color
   },
   interestText: {
     fontSize: 16,
-    color: '#000',
   },
   nextButton: {
     alignSelf: 'flex-end',
@@ -105,7 +100,6 @@ const styles = StyleSheet.create({
   },
   nextButtonText: {
     fontSize: 24,
-    color: '#000',
   },
 });
 
