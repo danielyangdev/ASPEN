@@ -8,8 +8,9 @@ const Index = () => {
 
   return (
     <ImageBackground
-      source={require('/Users/danielyang/HackSC24/assets/images/aspen-background.png')}
+      source={require('/Users/danielyang/HackSC24/assets/images/aspen-background-4.png')}
       style={styles.background}
+      imageStyle={styles.image} // Apply custom transform style
     >
       {/* Dark Overlay */}
       <View style={styles.overlay} />
@@ -40,13 +41,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  image: {
+    transform: [
+      { scale: 1.35 }, // Zoom the image out slightly
+      { translateX: 0 },
+      { translateY: 15 }, // Move the background image to the left
+    ],
+  },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 0, 0, 0.3)', // Darken background with transparency
   },
   textContainer: {
     position: 'absolute',
-    bottom: 140, // Position text right above the button
+    bottom: 300, // Position text right above the button
     left: 20, // Align text to the left side
   },
   mainTitle: {
@@ -64,7 +72,7 @@ const styles = StyleSheet.create({
   },
   getStartedButton: {
     position: 'absolute',
-    bottom: 40, // Position button at the very bottom with some margin
+    bottom: 70, // Position button at the very bottom with some margin
     alignSelf: 'center', // Center the button horizontally
     width: '80%',
     paddingVertical: 15,
