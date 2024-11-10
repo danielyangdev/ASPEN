@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as WebBrowser from 'expo-web-browser';
 
-const SERVER_URL = 'http://localhost:8000';
+const SERVER_IP = '127.0.0.1';  // Your server IP
+const SERVER_URL = `http://${SERVER_IP}:8000`;
 
 const Calendar = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,33 +43,18 @@ const Calendar = () => {
 
   return (
     <View style={styles.container}>
-      {/* Back Button */}
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>←</Text>
-      </TouchableOpacity>
-
       <Text style={styles.title}>Calendar Availability</Text>
 
-      {/* Auth Button */}
       <TouchableOpacity 
-        style={styles.authButton} 
+        style={styles.syncButton} 
         onPress={handleGoogleSignIn}
         disabled={isLoading}
       >
-        <Text style={styles.authButtonText}>Sign in with Google</Text>
+        <Text style={styles.syncButtonText}>
+          Sign in with Google
+        </Text>
       </TouchableOpacity>
 
-      {/* Loading Indicator */}
-      {isLoading && (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#000" />
-        </View>
-      )}
-
-      {/* Empty State Message */}
-      <Text style={styles.emptyText}>Sign in to view availability</Text>
-
-      {/* Next Button */}
       <TouchableOpacity 
         style={styles.nextButton} 
         onPress={() => navigation.navigate('Home')}
@@ -82,55 +68,34 @@ const Calendar = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    backgroundColor: '#fff',
-  },
-  backButton: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-  },
-  backButtonText: {
-    fontSize: 24,
-    color: '#000',
+    padding: 20,
+    backgroundColor: '#87CEEB',
   },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
-    marginTop: 60,
     textAlign: 'center',
+    marginVertical: 20,
+    color: '#fff',
   },
-  authButton: {
-    backgroundColor: '#000',
+  syncButton: {
+    backgroundColor: '#4682B4',
     paddingVertical: 10,
     borderRadius: 25,
     alignItems: 'center',
-    marginVertical: 20,
+    marginVertical: 5,
   },
-  authButtonText: {
+  syncButtonText: {
     color: '#fff',
     fontSize: 16,
   },
   nextButton: {
-    alignSelf: 'center',
-    marginTop: 30,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 25,
-    backgroundColor: '#000',
+    alignSelf: 'flex-end',
+    marginTop: 20,
   },
   nextButtonText: {
     fontSize: 24,
     color: '#fff',
-  },
-  loadingContainer: {
-    padding: 20,
-    alignItems: 'center',
-  },
-  emptyText: {
-    color: '#000',
-    textAlign: 'center',
-    marginTop: 20,
   },
 });
 

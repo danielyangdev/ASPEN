@@ -8,7 +8,7 @@ const Index = () => {
 
   return (
     <ImageBackground
-      source={require('/Users/danielyang/HackSC24/assets/images/aspen-background.png')}
+      source={require('../assets/images/aspen-background.png')}
       style={styles.background}
       imageStyle={styles.image} // Apply custom transform style
     >
