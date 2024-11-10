@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image, Alert } from 'react-native';
 import * as Contacts from 'expo-contacts';
 import { useNavigation } from '@react-navigation/native';
@@ -15,7 +15,7 @@ const AddFriends = () => {
   const [contactsSynced, setContactsSynced] = useState(false);
   const navigation = useNavigation();
 
-  // Function to sync contacts
+  // Sync contacts function
   const syncContacts = async () => {
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === 'granted') {
@@ -43,9 +43,17 @@ const AddFriends = () => {
     }
   };
 
+  // Handle adding a friend
   const handleAddFriend = (id: string) => {
     setFriends((prevFriends) => prevFriends.filter(friend => friend.id !== id));
   };
+
+  // Navigate to Calendar page if all friends are added
+  useEffect(() => {
+    if (contactsSynced && friends.length === 0) {
+      navigation.navigate('Calendar');
+    }
+  }, [friends, contactsSynced]);
 
   return (
     <View style={styles.container}>
@@ -54,9 +62,13 @@ const AddFriends = () => {
         <Text style={styles.backButtonText}>←</Text>
       </TouchableOpacity>
 
-      {/* Title */}
-      <Text style={styles.title}>Let's add your friends</Text>
-      <Text style={styles.subtitle}>Find your friends on Aspen!</Text>
+      {/* Introductory Text */}
+      {!contactsSynced && (
+        <>
+          <Text style={styles.title}>Let's add your friends</Text>
+          <Text style={styles.subtitle}>Find your friends on Aspen!</Text>
+        </>
+      )}
 
       {/* Sync Contacts Button */}
       {!contactsSynced && (
@@ -68,7 +80,7 @@ const AddFriends = () => {
       {/* Friends List - Only show if there are contacts */}
       {friends.length > 0 && (
         <>
-          <Text style={styles.subtitle}>Your friends on Aspen:</Text>
+          <Text style={styles.boldSubtitle}>Your friends on Aspen:</Text>
           <FlatList
             data={friends}
             keyExtractor={(item) => item.id}
@@ -91,17 +103,17 @@ const AddFriends = () => {
                 </TouchableOpacity>
               </View>
             )}
+            ListFooterComponent={() => (
+              <TouchableOpacity
+                style={styles.nextButton}
+                onPress={() => navigation.navigate('Calendar')}
+              >
+                <Text style={styles.nextButtonText}>→</Text>
+              </TouchableOpacity>
+            )}
           />
         </>
       )}
-
-      {/* Next Button */}
-      <TouchableOpacity
-        style={styles.nextButton}
-        onPress={() => navigation.navigate('Calendar')}
-      >
-        <Text style={styles.nextButtonText}>→</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -110,8 +122,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    justifyContent: 'center',
     backgroundColor: '#fff', // White background color
+    paddingTop: 100, // Move everything down
   },
   backButton: {
     position: 'absolute',
@@ -125,22 +137,27 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   subtitle: {
     fontSize: 18,
-    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  boldSubtitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 20,
   },
   syncButton: {
-    alignSelf: 'center',
+    backgroundColor: '#f2f2f2', // Light background for button
     paddingVertical: 10,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     borderRadius: 25,
-    backgroundColor: '#f2f2f2',
+    alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#000', // Black border to match style
+    marginVertical: 15,
   },
   syncButtonText: {
     fontSize: 16,
@@ -186,11 +203,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   nextButton: {
-    alignSelf: 'flex-end',
-    marginTop: 30,
+    alignSelf: 'center',
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 25,
+    backgroundColor: '#000',
   },
   nextButtonText: {
     fontSize: 24,
+    color: '#fff',
   },
 });
 
