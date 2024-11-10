@@ -65,9 +65,6 @@ const Calendar = () => {
         </View>
       )}
 
-      {/* Empty State Message */}
-      <Text style={styles.emptyText}>Sign in to view availability</Text>
-
       {/* Next Button */}
       <TouchableOpacity 
         style={styles.nextButton} 
@@ -113,15 +110,12 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     alignSelf: 'center',
-    marginTop: 30,
+    marginTop: 20,
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderRadius: 25,
-    backgroundColor: '#000',
   },
   nextButtonText: {
     fontSize: 24,
-    color: '#fff',
   },
   loadingContainer: {
     padding: 20,

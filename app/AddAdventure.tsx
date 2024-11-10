@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, Animated, PanResponder, ImageBackground } from 'react-native';
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
 
 const screenWidth = Dimensions.get('window').width;
@@ -17,20 +18,39 @@ const cardsData = [
     date: "Nov 11th, 8:00am",
     status: "Scheduled"
   },
+  {
+    title: "Tom & You",
+    mainImage: 'https://example.com/main-hike-image-1.jpg',
+    smallImage1: 'https://example.com/map-image-1.jpg',
+    smallImage2: 'https://example.com/second-hike-image-1.jpg',
+    trailTitle: "Temescal Trail",
+    date: "Nov 11th, 8:00am",
+    status: "Scheduled"
+  },
+  {
+    title: "Luke & You",
+    mainImage: 'https://example.com/main-hike-image-1.jpg',
+    smallImage1: 'https://example.com/map-image-1.jpg',
+    smallImage2: 'https://example.com/second-hike-image-1.jpg',
+    trailTitle: "Temescal Trail",
+    date: "Nov 11th, 8:00am",
+    status: "Scheduled"
+  },
   // Additional cards can go here...
 ];
 
 const AddAdventure = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
-  const position = useRef(new Animated.ValueXY({ x: 0, y: screenHeight })).current; // Start off-screen at the bottom
+  const navigation = useNavigation();
+  const position = useRef(new Animated.ValueXY({ x: 0, y: screenHeight })).current;
 
   useEffect(() => {
     animateCardEntrance();
   }, [currentIndex]);
 
   const animateCardEntrance = () => {
-    position.setValue({ x: 0, y: screenHeight }); // Start from the bottom
+    position.setValue({ x: 0, y: screenHeight });
     Animated.spring(position, {
       toValue: { x: 0, y: 0 },
       useNativeDriver: false,
@@ -55,7 +75,7 @@ const AddAdventure = () => {
   });
 
   const forceSwipe = (direction) => {
-    const x = direction === 'right' ? screenWidth * 1.2 : -screenWidth * 1.2; // Fully off-screen
+    const x = direction === 'right' ? screenWidth * 1.2 : -screenWidth * 1.2;
     Animated.timing(position, {
       toValue: { x, y: 0 },
       duration: 250,
@@ -65,13 +85,13 @@ const AddAdventure = () => {
 
   const onSwipeComplete = (direction) => {
     if (direction === 'right') {
-      setShowConfetti(true); // Trigger confetti
+      setShowConfetti(true);
       setTimeout(() => {
         setShowConfetti(false);
         advanceToNextCard();
-      }, 1000);
+      }, 900);
     } else {
-      setTimeout(advanceToNextCard, 300); // Slight delay for left swipe
+      setTimeout(advanceToNextCard, 300);
     }
   };
 
@@ -133,31 +153,56 @@ const AddAdventure = () => {
 
   return (
     <GestureHandlerRootView style={styles.container}>
-      <ImageBackground source={{ uri: 'https://example.com/background.jpg' }} style={styles.backgroundImage}>
-        {renderCard()}
-        {showConfetti && (
-          <ConfettiCannon
-            count={100}
-            origin={{ x: screenWidth / 2, y: 0 }}
-            fadeOut
-            autoStart
-          />
-        )}
+      <ImageBackground source={require('../assets/images/home-background.png')} style={styles.backgroundImage}>
+        {/* Back Button */}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.navigate('Home')}
+        >
+          <Text style={styles.backButtonText}>←</Text>
+        </TouchableOpacity>
+
+        <View style={styles.viewCardContent}>
+          {renderCard()}
+          {showConfetti && (
+            <ConfettiCannon
+              count={100}
+              origin={{ x: screenWidth / 2, y: 0 }}
+              fadeOut
+              autoStart
+            />
+          )}
+        </View>
       </ImageBackground>
     </GestureHandlerRootView>
   );
 };
 
 const styles = StyleSheet.create({
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    padding: 10,
+  },
+  backButtonText: {
+    fontSize: 24,
+    color: '#000',
+  },
   container: {
     flex: 1,
+  },
+  viewCardContent: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   backgroundImage: {
     flex: 1,
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   card: {
     width: screenWidth * 0.9,
@@ -171,8 +216,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
+    justifyContent: 'center',
     position: 'relative',
-    top: '15%', // Center vertically on the screen
+    top: '15%',
   },
   title: {
     fontSize: 20,
@@ -205,46 +251,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#E0F7FA',
     borderRadius: 15,
     padding: 10,
-    marginBottom: 15,
-  },
-  trailIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 10,
-    marginRight: 10,
-  },
-  trailTextContainer: {
-    flex: 1,
-  },
-  trailTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  trailDate: {
-    fontSize: 14,
-    color: '#666',
-  },
-  trailStatus: {
-    backgroundColor: '#B2EBF2',
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  statusText: {
-    color: '#00796B',
-    fontWeight: 'bold',
-  },
-  planButton: {
-    backgroundColor: '#B2DFDB',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    marginTop: 10,
-  },
-  planButtonText: {
-    color: '#00796B',
-    fontWeight: 'bold',
   },
 });
 
