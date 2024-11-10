@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
   backgroundImage: {
     position: 'absolute',
     width: '145%',
-    height: 500,
+    marginLeft: '-22.5%',
+    height: 450,
   },
   title: {
     fontSize: 28,
