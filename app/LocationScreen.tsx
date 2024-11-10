@@ -11,7 +11,7 @@ const LocationScreen = () => {
       {/* Top Image */}
       <View style={styles.imageContainer}>
         <Image
-          source={require('/Users/danielyang/HackSC24/assets/images/aspen-background-2.png')}
+          source={require('../assets/images/aspen-background-2.png')}
           style={styles.image}
         />
       </View>
