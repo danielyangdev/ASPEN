@@ -4,7 +4,14 @@ import * as Contacts from 'expo-contacts';
 import { useNavigation } from '@react-navigation/native';
 
 const AddFriends = () => {
-  const [friends, setFriends] = useState([]);
+  interface Friend {
+    id: string;
+    name: string;
+    phoneNumber: string;
+    photo: { uri: string } | null;
+  }
+  
+  const [friends, setFriends] = useState<Friend[]>([]);
   const navigation = useNavigation();
 
   // Function to sync contacts
@@ -22,7 +29,7 @@ const AddFriends = () => {
           phoneNumber: contact.phoneNumbers && contact.phoneNumbers.length > 0 
             ? String(contact.phoneNumbers[0].number) 
             : 'No phone number',  // Ensure phone number is always a string
-          photo: contact.imageAvailable && contact.image ? { uri: contact.image.uri } : null,
+          photo: contact.imageAvailable && contact.image && contact.image.uri ? { uri: contact.image.uri } : null,
         }));
         
         setFriends(contactsData);
@@ -35,7 +42,7 @@ const AddFriends = () => {
   };
 
   // Function to handle adding a friend and removing from the list
-  const handleAddFriend = (id) => {
+  const handleAddFriend = (id: string) => {
     setFriends((prevFriends) => prevFriends.filter(friend => friend.id !== id));
   };
 
