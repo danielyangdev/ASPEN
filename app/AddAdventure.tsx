@@ -41,16 +41,16 @@ const AddAdventure = () => {
       date: "Dec 4th, 9:00pm",
     },
     {
-      title: "Multiple & You",
+      title: "4+ & You",
       mainImage: 'https://images.unsplash.com/photo-1521488517399-2b4ed09655fa?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       trailTitle: "Climbing Yosemite",
       date: "Dec 12th, 11:00am",
     },
     {
-      title: "Multiple & You",
-      mainImage: 'https://images.unsplash.com/photo-1521488517399-2b4ed09655fa?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      trailTitle: "Climbing Yosemite",
-      date: "Dec 12th, 11:00am",
+      title: "Jasmine & You",
+      mainImage: 'https://images.unsplash.com/photo-1546940072-0dc23916c4f2?q=80&w=2748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      trailTitle: "The Louvre, Paris",
+      date: "Jan 1st, 10:00am",
     },
     // Additional cards can go here...
   ];
@@ -87,7 +87,7 @@ const panResponder = PanResponder.create({
 });
 
 const forceSwipe = (direction) => {
-  const x = direction === 'right' ? screenWidth * 1.2 : -screenWidth * 1.2;
+  const x = direction === 'right' ? screenWidth * 1.4 : -screenWidth * 1.4;
   Animated.timing(position, {
     toValue: { x, y: 0 },
     duration: 250,
