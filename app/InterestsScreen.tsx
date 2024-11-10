@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+
 
 const interestsList = [
   'Camping', 'Restaurants', 'Hiking', 'Concerts', 'Service',
@@ -18,6 +21,15 @@ const InterestsScreen = () => {
         : [...prev, interest]
     );
   };
+
+  const [fontsLoaded] = useFonts({
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <View style={styles.container}>
@@ -90,6 +102,7 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 24,
+    fontFamily: 'KohSantepheap-Regular',
   },
   textContainer: {
     marginTop: 300, // Move text and interests down to balance with enlarged image
@@ -98,11 +111,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    fontFamily: 'KohSantepheap-Bold',
   },
   subtitle: {
     fontSize: 18,
     marginTop: 10,
     marginBottom: 20,
+    fontFamily: 'KohSantepheap-Regular',
   },
   interestsContainer: {
     flexDirection: 'row',
@@ -123,6 +138,7 @@ const styles = StyleSheet.create({
   },
   interestText: {
     fontSize: 16,
+    fontFamily: 'KohSantepheap-Regular',
   },
   nextButton: {
     alignSelf: 'flex-end',

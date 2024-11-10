@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as WebBrowser from 'expo-web-browser';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const SERVER_URL = 'http://localhost:8000';
 
@@ -39,6 +41,15 @@ const Calendar = () => {
       setIsLoading(false);
     }
   };
+
+  const [fontsLoaded] = useFonts({
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <View style={styles.container}>
@@ -90,12 +101,14 @@ const styles = StyleSheet.create({
   backButtonText: {
     fontSize: 24,
     color: '#000',
+    fontFamily: 'KohSantepheap-Regular', 
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginTop: 60,
     textAlign: 'center',
+    fontFamily: 'KohSantepheap-Bold', 
   },
   authButton: {
     backgroundColor: '#000',
@@ -107,6 +120,7 @@ const styles = StyleSheet.create({
   authButtonText: {
     color: '#fff',
     fontSize: 16,
+    fontFamily: 'KohSantepheap-Regular', 
   },
   nextButton: {
     alignSelf: 'center',
@@ -116,6 +130,7 @@ const styles = StyleSheet.create({
   },
   nextButtonText: {
     fontSize: 24,
+    fontFamily: 'KohSantepheap-Regular', 
   },
   loadingContainer: {
     padding: 20,
@@ -125,6 +140,7 @@ const styles = StyleSheet.create({
     color: '#000',
     textAlign: 'center',
     marginTop: 20,
+    fontFamily: 'KohSantepheap-Regular', 
   },
 });
 

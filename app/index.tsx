@@ -2,9 +2,21 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from './types'; // Adjust path if needed
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const Index = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  // Load the font
+  const [fontsLoaded] = useFonts({
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <ImageBackground
@@ -61,14 +73,16 @@ const styles = StyleSheet.create({
     fontSize: 80, // Increase font size for emphasis
     fontWeight: 'bold',
     color: '#fff',
+    fontFamily: 'KohSantepheap-Bold',
     textAlign: 'left',
   },
   subtitle: {
-    fontSize: 25,
+    fontSize: 22,
     color: '#fff',
     fontStyle: 'italic', // Make text italic
     textAlign: 'left',
-    marginTop: 10, // Small gap between title and subtitle
+    fontFamily: 'KohSantepheap-Regular',
+    marginTop: 7, // Small gap between title and subtitle
   },
   getStartedButton: {
     position: 'absolute',
@@ -84,6 +98,7 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: 'KohSantepheap-Bold',
   },
 });
 

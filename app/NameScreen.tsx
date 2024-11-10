@@ -8,7 +8,6 @@ const NameScreen = () => {
   const [name, setName] = useState('');
   const navigation = useNavigation();
 
-  // Load the font
   const [fontsLoaded] = useFonts({
     'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
     'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
   },
   nextButtonText: {
     fontSize: 24,
-    fontFamily: 'KohSantepheap-Regular', // Apply font to next button
+    fontFamily: 'KohSantepheap-Regular', 
   },
 });
 

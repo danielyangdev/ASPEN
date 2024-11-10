@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const AdventureDetails = () => {
   const route = useRoute();
@@ -15,6 +17,15 @@ const AdventureDetails = () => {
     people,
     description
   } = route.params;
+
+  const [fontsLoaded] = useFonts({
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <View style={styles.container}>
@@ -109,6 +120,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 15,
     color: '#000',
+    fontFamily: 'KohSantepheap-Bold', 
   },
   infoContainer: {
     marginBottom: 15,
@@ -127,6 +139,7 @@ const styles = StyleSheet.create({
   infoText: {
     fontSize: 16,
     color: '#000',
+    fontFamily: 'KohSantepheap-Regular', 
   },
   descriptionContainer: {
     flex: 1,
@@ -136,6 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#333',
     lineHeight: 20,
+    fontFamily: 'KohSantepheap-Regular', 
   },
   viewMoreButton: {
     backgroundColor: '#D1E8E4', // Button background color
@@ -149,6 +163,7 @@ const styles = StyleSheet.create({
   viewMoreButtonText: {
     fontSize: 16,
     color: '#000',
+    fontFamily: 'KohSantepheap-Regular', 
   },
   backButton: {
     position: 'absolute',
@@ -161,6 +176,7 @@ const styles = StyleSheet.create({
   backButtonText: {
     fontSize: 24,
     color: '#fff',
+    fontFamily: 'KohSantepheap-Regular', 
   },
 });
 

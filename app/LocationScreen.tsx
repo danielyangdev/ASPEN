@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const LocationScreen = () => {
   const [location, setLocation] = useState('');
   const navigation = useNavigation();
+
+  const [fontsLoaded] = useFonts({
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <View style={styles.container}>
@@ -77,11 +88,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    fontFamily: 'KohSantepheap-Bold',
   },
   subtitle: {
     fontSize: 18,
     marginTop: 10,
     marginBottom: 20,
+    fontFamily: 'KohSantepheap-Regular',
   },
   input: {
     borderBottomWidth: 1,

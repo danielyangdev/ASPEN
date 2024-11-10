@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image, Alert } from 'react-native';
 import * as Contacts from 'expo-contacts';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const AddFriends = () => {
   interface Friend {
@@ -15,7 +17,15 @@ const AddFriends = () => {
   const [contactsSynced, setContactsSynced] = useState(false);
   const navigation = useNavigation();
 
-  // Sync contacts function
+  const [fontsLoaded] = useFonts({
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   const syncContacts = async () => {
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === 'granted') {
@@ -133,21 +143,25 @@ const styles = StyleSheet.create({
   backButtonText: {
     fontSize: 24,
     color: '#000',
+    fontFamily: 'KohSantepheap-Regular',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    fontFamily: 'KohSantepheap-Bold',
   },
   subtitle: {
     fontSize: 18,
     marginTop: 10,
     marginBottom: 20,
+    fontFamily: 'KohSantepheap-Regular',
   },
   boldSubtitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 20,
+    fontFamily: 'KohSantepheap-Regular',
   },
   syncButton: {
     backgroundColor: '#f2f2f2', // Light background for button
@@ -162,6 +176,7 @@ const styles = StyleSheet.create({
   syncButtonText: {
     fontSize: 16,
     color: '#000',
+    fontFamily: 'KohSantepheap-Regular',
   },
   friendContainer: {
     flexDirection: 'row',
@@ -169,12 +184,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#E0E0E0',
     padding: 15,
+    fontFamily: 'KohSantepheap-Regular',
     borderRadius: 10,
     marginVertical: 5,
   },
   friendInfo: {
     flexDirection: 'row',
     alignItems: 'center',
+    fontFamily: 'KohSantepheap-Regular',
   },
   avatar: {
     width: 50,
@@ -187,10 +204,12 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'KohSantepheap-Bold',
   },
   friendPhone: {
     color: '#000',
     fontSize: 14,
+    fontFamily: 'KohSantepheap-Regular',
   },
   addButton: {
     backgroundColor: '#000',
@@ -201,6 +220,7 @@ const styles = StyleSheet.create({
   addButtonText: {
     color: '#fff',
     fontSize: 14,
+    fontFamily: 'KohSantepheap-Regular',
   },
   nextButton: {
     alignSelf: 'center',
@@ -210,6 +230,7 @@ const styles = StyleSheet.create({
   },
   nextButtonText: {
     fontSize: 24,
+    fontFamily: 'KohSantepheap-Regular',
   },
 });
 

@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, ImageBackground } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from './types'; // Ensure this import path is correct
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const adventures = [
   {
@@ -11,7 +13,7 @@ const adventures = [
     image: require('../assets/images/universal-studios.png'),
     price: 80,
     stars: '4.5/5',
-    location: '100 Universal City Plaza, Universal City, CA 91608',
+    location: '100 Universal City Plaza, CA 91608',
     people: 'Ally Wang, Beatrice Smith, Christopher Lee',
     description: 'Universal Studios is a major entertainment complex featuring a blend of thrilling amusement park rides, engaging movie-based attractions, and studio tours set in the vibrant ambiance of Hollywood magic. Created by Universal Pictures, the theme parks are designed around popular film franchises, inviting guests to immerse themselves in themed worlds inspired by movies like Harry Potter, Jurassic Park, The Simpsons, and Despicable Me.',
   },
@@ -73,6 +75,15 @@ const adventures = [
 ];
 
 const Home = () => {
+  const [fontsLoaded] = useFonts({
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
@@ -142,6 +153,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',      
     alignSelf: 'flex-start',  
     paddingLeft: 20,
+    fontFamily: 'KohSantepheap-Bold',
     marginTop: 90,
   },
   upcomingContainer: {
@@ -160,6 +172,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontWeight: '600',
     marginBottom: 20,
+    fontFamily: 'KohSantepheap-Bold',
   },
   adventureList: {
     paddingBottom: 40, // Space for the add button
@@ -176,6 +189,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
     elevation: 5,
+    fontFamily: 'KohSantepheap-Regular',
   },
   adventureImage: {
     width: 50,
@@ -185,10 +199,12 @@ const styles = StyleSheet.create({
   adventureInfo: {
     flex: 1,
     marginLeft: 10,
+    fontFamily: 'KohSantepheap-Regular',
   },
   adventureTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: 'KohSantepheap-Bold',
   },
   adventureDateContainer: {
     flexDirection: 'row',
@@ -213,6 +229,7 @@ const styles = StyleSheet.create({
   viewButtonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontFamily: 'KohSantepheap-Regular',
   },
   addButton: {
     backgroundColor: '#87CEEB',
@@ -229,6 +246,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 36,
     fontWeight: 'bold',
+    fontFamily: 'KohSantepheap-Regular',
   },
   bottomOverlay: {
     position: 'absolute',
