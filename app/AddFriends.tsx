@@ -1,49 +1,78 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image, Alert } from 'react-native';
+import * as Contacts from 'expo-contacts';
 import { useNavigation } from '@react-navigation/native';
 
-const friends = [
-  { id: '1', name: 'Name', username: 'username', photo: null },
-  { id: '2', name: 'Name', username: 'username', photo: null },
-  { id: '3', name: 'Name', username: 'username', photo: null },
-  { id: '4', name: 'Name', username: 'username', photo: null },
-];
-
 const AddFriends = () => {
+  const [friends, setFriends] = useState([]);
   const navigation = useNavigation();
+
+  // Function to sync contacts
+  const syncContacts = async () => {
+    const { status } = await Contacts.requestPermissionsAsync();
+    if (status === 'granted') {
+      const { data } = await Contacts.getContactsAsync({
+        fields: [Contacts.Fields.Name, Contacts.Fields.Image],
+      });
+
+      if (data.length > 0) {
+        const contactsData = data.map((contact, index) => ({
+          id: index.toString(),
+          name: contact.name || 'Unknown',
+          username: contact.name ? contact.name.split(' ')[0].toLowerCase() : 'username',
+          photo: contact.imageAvailable && contact.image ? { uri: contact.image.uri } : null,
+        }));
+        
+        setFriends(contactsData);
+      } else {
+        Alert.alert('No contacts found', 'Your contact list is empty.');
+      }
+    } else {
+      Alert.alert('Permission denied', 'Unable to access contacts.');
+    }
+  };
+
+  // Function to handle adding a friend and removing from the list
+  const handleAddFriend = (id) => {
+    setFriends((prevFriends) => prevFriends.filter(friend => friend.id !== id));
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>ADD FRIENDS</Text>
 
       {/* Sync Contacts Button */}
-      <TouchableOpacity style={styles.syncButton}>
+      <TouchableOpacity style={styles.syncButton} onPress={syncContacts}>
         <Text style={styles.syncButtonText}>Sync contacts</Text>
       </TouchableOpacity>
 
-      {/* Friends List */}
-      <Text style={styles.subtitle}>Your friends on ___:</Text>
-      <FlatList
-        data={friends}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.friendContainer}>
-            <View style={styles.friendInfo}>
-              <Image
-                // source={item.photo || require('@/assets/images/default-avatar.png')}
-                style={styles.avatar}
-              />
-              <View>
-                <Text style={styles.friendName}>{item.name}</Text>
-                <Text style={styles.friendUsername}>{item.username}</Text>
+      {/* Friends List - Only show if there are contacts */}
+      {friends.length > 0 && (
+        <>
+          <Text style={styles.subtitle}>Your friends on Aspen:</Text>
+          <FlatList
+            data={friends}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View style={styles.friendContainer}>
+                <View style={styles.friendInfo}>
+                  <Image
+                    source={item.photo ? item.photo : require('@/assets/images/default-avatar.png')}
+                    style={styles.avatar}
+                  />
+                  <View>
+                    <Text style={styles.friendName}>{item.name}</Text>
+                    <Text style={styles.friendUsername}>{item.username}</Text>
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.addButton} onPress={() => handleAddFriend(item.id)}>
+                  <Text style={styles.addButtonText}>Add</Text>
+                </TouchableOpacity>
               </View>
-            </View>
-            <TouchableOpacity style={styles.addButton}>
-              <Text style={styles.addButtonText}>Add</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      />
+            )}
+          />
+        </>
+      )}
 
       {/* Next Button */}
       <TouchableOpacity
