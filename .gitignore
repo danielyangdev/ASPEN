@@ -53,10 +53,7 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-expo-env.d.ts
-# @end expo-cli
-
-# other
+# Your additional files
 app.json
 babel.config.js
 expo-env.d.ts
@@ -66,3 +63,5 @@ package-lock.json
 package.json
 tsconfig.json
 yarn.lock
+
+# @end expo-cli
