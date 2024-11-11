@@ -1,8 +1,5 @@
 # ASPEN🏔️
-Take back your time, take on an adventure
-
-## Inspiration
-In today’s fast-paced world, it's easy to get stuck in routines, making it hard to plan enriching experiences outside of daily responsibilities. Many people find it challenging to organize adventures due to limited time, overwhelming options, or the complexity of coordinating schedules with friends. **Big Tech hires PhD psychologists to design apps that keep us hooked, stealing our time and attention. With ASPEN, we’re flipping the script**—using the same techniques, like an intuitive UI, calendar integration, Tinder-like swiping, and gamification with confetti, to help users reclaim their time for good. ASPEN was born out of a desire to help people plan meaningful experiences, explore the world around them, and say “yes” to adventure.
+Take back your time, take on an adventure.
 
 <img width="230" alt="page_1" src="https://github.com/user-attachments/assets/4a670d7a-4727-41ff-b769-7a01c0dfd1c8">
 <img width="230" alt="page_2" src="https://github.com/user-attachments/assets/59ea71a3-4a59-4cce-94e5-1a219b8dd86c">
