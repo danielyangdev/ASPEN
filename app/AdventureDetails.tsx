@@ -19,8 +19,8 @@ const AdventureDetails = () => {
   } = route.params;
 
   const [fontsLoaded] = useFonts({
-    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
-    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'),
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   },
   descriptionContainer: {
     flex: 1,
-    marginBottom: 20, // Space above View More button
+    marginBottom: 20, 
   },
   descriptionText: {
     fontSize: 14,
@@ -152,13 +152,13 @@ const styles = StyleSheet.create({
     fontFamily: 'KohSantepheap-Regular', 
   },
   viewMoreButton: {
-    backgroundColor: '#D1E8E4', // Button background color
+    backgroundColor: '#D1E8E4', 
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 25,
     alignItems: 'center',
-    marginBottom: 40, // Spacing below button
-    alignSelf: 'center', // Center the button
+    marginBottom: 40, 
+    alignSelf: 'center', 
   },
   viewMoreButtonText: {
     fontSize: 16,

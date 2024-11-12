@@ -18,8 +18,8 @@ const AddAdventure = () => {
   const position = useRef(new Animated.ValueXY({ x: 0, y: screenHeight })).current;
 
   const [fontsLoaded] = useFonts({
-    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
-    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), 
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), 
   });
 
   if (!fontsLoaded) {
@@ -63,7 +63,6 @@ const AddAdventure = () => {
       trailTitle: "The Louvre, Paris",
       date: "Jan 1st, 10:00am",
     },
-    // Additional cards can go here...
   ];
 
 const currentCard = cardsData[currentIndex];
@@ -97,7 +96,7 @@ const panResponder = PanResponder.create({
   }
 });
 
-const forceSwipe = (direction) => {
+const forceSwipe = (direction: string) => {
   const x = direction === 'right' ? screenWidth * 1.4 : -screenWidth * 1.4;
   Animated.timing(position, {
     toValue: { x, y: 0 },
@@ -106,7 +105,7 @@ const forceSwipe = (direction) => {
   }).start(() => onSwipeComplete(direction));
 };
 
-const onSwipeComplete = (direction) => {
+const onSwipeComplete = (direction: string) => {
   if (direction === 'right') {
     setShowConfetti(true);
     setTimeout(() => {
@@ -175,15 +174,6 @@ const renderCard = () => {
         {/* Overlay for the entire background */}
         <View style={styles.backgroundOverlay} pointerEvents="none" />
 
-        {/* Back Button */}
-        {/* <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
-          <Text style={styles.backButtonText}>←</Text>
-        </TouchableOpacity> */}
-
-        {/* <TouchableOpacity onPress={() => {console.log("Back button pressed"); navigation.navigate('Home');}} style={styles.backButton}>
-          <Text style={styles.backButtonText}>←</Text>
-        </TouchableOpacity> */}
-
         <TouchableOpacity onPress={() => {console.log("Back button pressed"); navigation.goBack();}} style={styles.backButton}>
           <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
@@ -209,8 +199,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   backgroundOverlay: {
-    ...StyleSheet.absoluteFillObject, // Ensures the overlay covers the entire background
-    backgroundColor: 'rgba(255, 255, 255, 0.3)', // Slightly white overlay
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
   },
   backButton: {
     position: 'absolute',
@@ -229,7 +219,7 @@ const styles = StyleSheet.create({
     },
   cardContainer: {
     width: screenWidth * 0.9,
-    height: screenHeight * 0.8, // Make the card taller
+    height: screenHeight * 0.8, 
     borderRadius: 20,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -249,8 +239,8 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   overlay: {
-    ...StyleSheet.absoluteFillObject, // Ensures the overlay covers the entire image
-    backgroundColor: 'rgba(255, 255, 255, 0.05)', // Semi-transparent white overlay
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: 20,
   },
   title: {
@@ -272,7 +262,7 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     position: 'absolute',
-    top: 40, // Distance from the bottom edge of the card
+    top: 40,
     left: 30,
     right: 20,
     flexDirection: 'row',
@@ -281,7 +271,7 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     position: 'absolute',
-    bottom: 20, // Distance from the bottom edge of the card
+    bottom: 20,
     left: 30,
     right: 20,
     flexDirection: 'row',

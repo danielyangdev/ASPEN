@@ -1,4 +1,5 @@
-export type RootStackParamList = {
+export type RootStackParamList = 
+{
   Home: undefined;
   AdventureDetails: undefined;
   AddAdventure: undefined;

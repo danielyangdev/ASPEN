@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { RootStackParamList } from './types'; // Adjust path if needed
+import { RootStackParamList } from './types'; 
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
 const Index = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  // Load the font
   const [fontsLoaded] = useFonts({
-    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
-    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), 
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -22,7 +21,7 @@ const Index = () => {
     <ImageBackground
       source={require('../assets/images/aspen-background.png')}
       style={styles.background}
-      imageStyle={styles.image} // Apply custom transform style
+      imageStyle={styles.image} 
     >
       {/* Dark Overlay */}
       <View style={styles.overlay} />
@@ -39,7 +38,7 @@ const Index = () => {
       {/* Get Started Button */}
       <TouchableOpacity
         style={styles.getStartedButton}
-        onPress={() => navigation.navigate('NameScreen')} // Changed to navigate to NameScreen
+        onPress={() => navigation.navigate('NameScreen' as never)}
       >
         <Text style={styles.getStartedButtonText}>Get started</Text>
       </TouchableOpacity>
@@ -55,22 +54,22 @@ const styles = StyleSheet.create({
   },
   image: {
     transform: [
-      { scale: 1.35 }, // Zoom the image out slightly
+      { scale: 1.35 }, 
       { translateX: 0 },
-      { translateY: 15 }, // Move the background image to the left
+      { translateY: 15 },
     ],
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Darken background with transparency
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
   textContainer: {
     position: 'absolute',
-    bottom: 300, // Position text right above the button
-    left: 20, // Align text to the left side
+    bottom: 300, 
+    left: 20, 
   },
   mainTitle: {
-    fontSize: 80, // Increase font size for emphasis
+    fontSize: 80, 
     fontWeight: 'bold',
     color: '#fff',
     fontFamily: 'KohSantepheap-Bold',
@@ -79,15 +78,15 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 22,
     color: '#fff',
-    fontStyle: 'italic', // Make text italic
+    fontStyle: 'italic',
     textAlign: 'left',
     fontFamily: 'KohSantepheap-Regular',
-    marginTop: 7, // Small gap between title and subtitle
+    marginTop: 7, 
   },
   getStartedButton: {
     position: 'absolute',
-    bottom: 70, // Position button at the very bottom with some margin
-    alignSelf: 'center', // Center the button horizontally
+    bottom: 70, 
+    alignSelf: 'center',
     width: '80%',
     paddingVertical: 15,
     borderRadius: 25,

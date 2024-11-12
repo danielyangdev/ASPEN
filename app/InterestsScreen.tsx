@@ -23,8 +23,8 @@ const InterestsScreen = () => {
   };
 
   const [fontsLoaded] = useFonts({
-    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
-    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), 
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -68,7 +68,7 @@ const InterestsScreen = () => {
       </View>
 
       {/* Next Button */}
-      <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('AddFriends')}>
+      <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('AddFriends' as never)}>
         <Text style={styles.nextButtonText}>→</Text>
       </TouchableOpacity>
     </View>
@@ -84,10 +84,10 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: 'absolute',
     top: -20,
-    right: -130, // Move image off-screen for aesthetic cutoff
-    width: 330, // Increased width for enlarged image
-    height: 270, // Increased height for enlarged image
-    borderBottomLeftRadius: 80, // Rounded for aesthetics
+    right: -130, 
+    width: 330,
+    height: 270, 
+    borderBottomLeftRadius: 80,
     overflow: 'hidden',
   },
   image: {
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     fontFamily: 'KohSantepheap-Regular',
   },
   textContainer: {
-    marginTop: 300, // Move text and interests down to balance with enlarged image
+    marginTop: 300,
     alignItems: 'flex-start',
   },
   title: {
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     margin: 7,
   },
   selectedInterestButton: {
-    backgroundColor: '#E0E0E0', // Highlight color for selected interests
+    backgroundColor: '#E0E0E0',
   },
   interestText: {
     fontSize: 16,

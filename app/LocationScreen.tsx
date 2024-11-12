@@ -9,8 +9,8 @@ const LocationScreen = () => {
   const navigation = useNavigation();
 
   const [fontsLoaded] = useFonts({
-    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
-    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), 
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -45,7 +45,7 @@ const LocationScreen = () => {
         />
 
         {/* Next Button */}
-        <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('InterestsScreen')}>
+        <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('InterestsScreen' as never)}>
           <Text style={styles.nextButtonText}>→</Text>
         </TouchableOpacity>
       </View>
@@ -62,10 +62,10 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: 'absolute',
     top: -20,
-    right: -130, // Move it further off-screen to cut off more
-    width: 330, // Increased width by 50% from original
-    height: 270, // Increased height by 50% from original
-    borderBottomLeftRadius: 80, // Slight rounding for aesthetics
+    right: -130,
+    width: 330,
+    height: 270, 
+    borderBottomLeftRadius: 80, 
     overflow: 'hidden',
   },
   image: {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   textContainer: {
-    marginTop: 350, // Move text lower for balance with enlarged image
+    marginTop: 350,
     alignItems: 'flex-start',
   },
   title: {

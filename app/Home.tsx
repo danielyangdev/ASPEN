@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, ImageBackground } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { RootStackParamList } from './types'; // Ensure this import path is correct
+import { RootStackParamList } from './types';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
@@ -22,8 +22,8 @@ const adventures = [
     title: 'Skydiving Oceanside',
     date: 'Nov 16th, 2:00pm',
     image: require('../assets/images/oceanside-skydiving.png'),
-    price: Math.floor(Math.random() * 91) + 10, // Random price from 10 to 100
-    stars: (4.1 + Math.random() * 0.8).toFixed(1) + '/5', // Random rating from 4.1 to 4.9
+    price: 153, 
+    stars: (4.1 + Math.random() * 0.8).toFixed(1) + '/5', 
     location: 'Oceanside, CA',
     people: 'John Doe, Jane Smith',
     description: 'Experience the thrill of a lifetime with skydiving over the stunning coast of Oceanside. Feel the rush as you jump from thousands of feet above, freefalling through the sky, and enjoy breathtaking views of the Pacific Ocean and the scenic Californian coastline. This adventure is perfect for thrill-seekers and adrenaline lovers looking for an unforgettable, heart-pounding experience.',
@@ -33,7 +33,7 @@ const adventures = [
     title: 'USC vs Nebraska',
     date: 'Nov 16th, 7:00pm',
     image: require('../assets/images/usc-football.png'),
-    price: Math.floor(Math.random() * 91) + 10,
+    price: 75,
     stars: (4.1 + Math.random() * 0.8).toFixed(1) + '/5',
     location: 'Los Angeles Memorial Coliseum, CA',
     people: 'Mike Johnson, Sarah Lee, Kevin Yu',
@@ -44,7 +44,7 @@ const adventures = [
     title: 'Los Angeles County Museum',
     date: 'Nov 25th, 10:00am',
     image: require('../assets/images/la-county-museum.png'),
-    price: Math.floor(Math.random() * 91) + 10,
+    price: 35,
     stars: (4.1 + Math.random() * 0.8).toFixed(1) + '/5',
     location: '5905 Wilshire Blvd, Los Angeles, CA 90036',
     people: 'Emily Carter, Rachel Adams',
@@ -55,7 +55,7 @@ const adventures = [
     title: 'Big Bear Lake',
     date: 'Dec 13th, 7:00am',
     image: require('../assets/images/big-bear.png'),
-    price: Math.floor(Math.random() * 91) + 10,
+    price: 24,
     stars: (4.1 + Math.random() * 0.8).toFixed(1) + '/5',
     location: 'Big Bear Lake, CA',
     people: 'Lucas Gray, Monica Reyes, Justin Kim',
@@ -66,7 +66,7 @@ const adventures = [
     title: 'Yosemite National Park',
     date: 'Dec 20th, 11:00am',
     image: require('../assets/images/yosemite-park.png'),
-    price: Math.floor(Math.random() * 91) + 10,
+    price: 45,
     stars: (4.1 + Math.random() * 0.8).toFixed(1) + '/5',
     location: 'Yosemite National Park, CA',
     people: 'Sophia Chen, Tom Parker, Lisa Tran',
@@ -76,8 +76,8 @@ const adventures = [
 
 const Home = () => {
   const [fontsLoaded] = useFonts({
-    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
-    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), 
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -162,9 +162,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     paddingTop: 20,
-    marginTop: 240,   // change height of card
+    marginTop: 240,  
     paddingHorizontal: 20,
-    paddingBottom: 80, // Extra padding to make space for the blur effect
+    paddingBottom: 80, 
   },
   subtitle: {
     fontSize: 18,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     fontFamily: 'KohSantepheap-Bold',
   },
   adventureList: {
-    paddingBottom: 40, // Space for the add button
+    paddingBottom: 40, 
   },
   adventureCard: {
     flexDirection: 'row',

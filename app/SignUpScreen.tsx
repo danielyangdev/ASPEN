@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type RootStackParamList = {
+  SignUp: undefined;
+  AddFriends: undefined;
+};
 
 const interestsList = [
   'Outdoor Adventures', 'Extreme Sports', 'Arts & Craft',
@@ -10,7 +16,7 @@ const interestsList = [
 
 const SignUpScreen = () => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests(prev =>
@@ -42,7 +48,7 @@ const SignUpScreen = () => {
           <Text style={styles.label}>{label}:</Text>
           <TextInput
             style={styles.input}
-            placeholderTextColor="transparent" // Hide placeholder text
+            placeholderTextColor="transparent"
             secureTextEntry={label === 'Password'}
           />
         </View>
@@ -85,12 +91,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   contentContainer: {
-    marginTop: 50, // Adjust this value to move the content down
+    marginTop: 50,
     alignItems: 'center',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Darken background with transparency
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   backButton: {
     position: 'absolute',
@@ -100,7 +106,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   backButtonText: {
-    fontSize: 24, // Larger font size for bigger back button
+    fontSize: 24,
     color: '#fff',
   },
   title: {
@@ -132,7 +138,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
     paddingHorizontal: 10,
-    paddingLeft: 5, // Shorten the line on the left
+    paddingLeft: 5,
     paddingRight: 10,
   },
   interestsContainer: {

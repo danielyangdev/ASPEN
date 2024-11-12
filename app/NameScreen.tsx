@@ -9,8 +9,8 @@ const NameScreen = () => {
   const navigation = useNavigation();
 
   const [fontsLoaded] = useFonts({
-    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
-    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'),
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -45,7 +45,7 @@ const NameScreen = () => {
         />
 
         {/* Next Button */}
-        <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('LocationScreen')}>
+        <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('LocationScreen' as never)}>
           <Text style={styles.nextButtonText}>→</Text>
         </TouchableOpacity>
       </View>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 24,
-    fontFamily: 'KohSantepheap-Bold', // Apply font to back button
+    fontFamily: 'KohSantepheap-Bold', 
   },
   textContainer: {
     marginTop: 350,
@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    fontFamily: 'KohSantepheap-Bold', // Apply font to title
+    fontFamily: 'KohSantepheap-Bold',
   },
   subtitle: {
     fontSize: 18,
     marginTop: 10,
     marginBottom: 20,
-    fontFamily: 'KohSantepheap-Regular', // Apply font to subtitle
+    fontFamily: 'KohSantepheap-Regular',
   },
   input: {
     borderBottomWidth: 1,

@@ -25,10 +25,8 @@ const Calendar = () => {
       if (response.ok) {
         const data = await response.json();
         if (data.authorization_url) {
-          // Open the authorization URL without handling callbacks
           await WebBrowser.openBrowserAsync(data.authorization_url);
-          // Navigate to the next page after browser is closed
-          navigation.navigate('Home');
+          navigation.navigate('Home' as never);
         }
       } else {
         const errorText = await response.text();
@@ -36,15 +34,16 @@ const Calendar = () => {
       }
     } catch (error) {
       console.error('Sign in error:', error);
-      Alert.alert('Error', `Failed to open Google Sign-in: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      Alert.alert('Error', `Failed to open Google Sign-in: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
   };
 
   const [fontsLoaded] = useFonts({
-    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
-    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), 
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), 
   });
 
   if (!fontsLoaded) {
@@ -79,7 +78,7 @@ const Calendar = () => {
       {/* Next Button */}
       <TouchableOpacity 
         style={styles.nextButton} 
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('Home' as never)}
       >
         <Text style={styles.nextButtonText}>→</Text>
       </TouchableOpacity>

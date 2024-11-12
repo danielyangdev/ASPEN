@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image, Alert } from 'react-native';
 import * as Contacts from 'expo-contacts';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type RootStackParamList = {
+  Calendar: undefined;
+};
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
@@ -15,11 +20,11 @@ const AddFriends = () => {
 
   const [friends, setFriends] = useState<Friend[]>([]);
   const [contactsSynced, setContactsSynced] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const [fontsLoaded] = useFonts({
-    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), // Adjust path as needed
-    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'), // Adjust path as needed
+    'KohSantepheap-Regular': require('../assets/fonts/KohSantepheap-Regular.ttf'), 
+    'KohSantepheap-Bold': require('../assets/fonts/KohSantepheap-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -44,7 +49,7 @@ const AddFriends = () => {
         }));
 
         setFriends(contactsData);
-        setContactsSynced(true); // Hide button after syncing
+        setContactsSynced(true); 
       } else {
         Alert.alert('No contacts found', 'Your contact list is empty.');
       }
@@ -53,12 +58,10 @@ const AddFriends = () => {
     }
   };
 
-  // Handle adding a friend
   const handleAddFriend = (id: string) => {
     setFriends((prevFriends) => prevFriends.filter(friend => friend.id !== id));
   };
 
-  // Navigate to Calendar page if all friends are added
   useEffect(() => {
     if (contactsSynced && friends.length === 0) {
       navigation.navigate('Calendar');
@@ -87,7 +90,7 @@ const AddFriends = () => {
         </TouchableOpacity>
       )}
 
-      {/* Friends List - Only show if there are contacts */}
+      {/* Friends List */}
       {friends.length > 0 && (
         <>
           <Text style={styles.boldSubtitle}>Your friends on Aspen:</Text>
@@ -132,8 +135,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    backgroundColor: '#fff', // White background color
-    paddingTop: 100, // Move everything down
+    backgroundColor: '#fff', 
+    paddingTop: 100, 
   },
   backButton: {
     position: 'absolute',
@@ -164,13 +167,13 @@ const styles = StyleSheet.create({
     fontFamily: 'KohSantepheap-Regular',
   },
   syncButton: {
-    backgroundColor: '#f2f2f2', // Light background for button
+    backgroundColor: '#f2f2f2', 
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 25,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#000', // Black border to match style
+    borderColor: '#000', 
     marginVertical: 15,
   },
   syncButtonText: {
